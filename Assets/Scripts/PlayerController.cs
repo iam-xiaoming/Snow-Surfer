@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(ReloadScene());
             return;
         }
-        
+
         UpdateTorqueAMount();
         RotatePlayer();
         BoostPlayer();
@@ -97,5 +97,20 @@ public class PlayerController : MonoBehaviour
     public int GetFlipCount()
     {
         return flipCount;
+    }
+
+    public void ActivatePowerup(PowerupSO powerup)
+    {
+        baseSpeed += powerup.GetSpeed();
+        boostSpeed += powerup.GetSpeed();
+
+        StartCoroutine(PickupTime(powerup));
+    }
+
+    IEnumerator PickupTime(PowerupSO powerup)
+    {
+        yield return new WaitForSecondsRealtime(powerup.GetTime());
+        baseSpeed -= powerup.GetSpeed();
+        boostSpeed -= powerup.GetSpeed();
     }
 }
