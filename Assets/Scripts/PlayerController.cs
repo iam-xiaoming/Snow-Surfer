@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D myRigidbody2D;
     SurfaceEffector2D surfaceEffector2D;
     CapsuleCollider2D capsuleCollider2D;
+    ParticleSystemController particleSystemController;
 
     public bool isFinish = false;
     public bool isDead = false;
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
         myRigidbody2D = GetComponent<Rigidbody2D>();
         surfaceEffector2D = FindFirstObjectByType<SurfaceEffector2D>();
         capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        particleSystemController = GetComponent<ParticleSystemController>();
     }
 
     // Update is called once per frame
@@ -103,6 +106,7 @@ public class PlayerController : MonoBehaviour
     {
         baseSpeed += powerup.GetSpeed();
         boostSpeed += powerup.GetSpeed();
+        particleSystemController.ActivatePickupParticle();
 
         StartCoroutine(PickupTime(powerup));
     }
@@ -112,5 +116,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSecondsRealtime(powerup.GetTime());
         baseSpeed -= powerup.GetSpeed();
         boostSpeed -= powerup.GetSpeed();
+        particleSystemController.DeactivatePickupParticle();
     }
 }

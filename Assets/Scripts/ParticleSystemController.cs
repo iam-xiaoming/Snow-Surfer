@@ -2,20 +2,26 @@ using UnityEngine;
 
 public class ParticleSystemController : MonoBehaviour
 {
-    ParticleSystem myParticleSystem;
-
-    void Start()
-    {
-        myParticleSystem = GetComponentInChildren<ParticleSystem>();    
-    }
+    [SerializeField] ParticleSystem surferParticleSystem;
+    [SerializeField] ParticleSystem pickUpParticleSystem;
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        myParticleSystem.Play();
+        surferParticleSystem.Play();
     }
 
     void OnCollisionExit2D(Collision2D other)
     {
-        myParticleSystem.Stop();    
+        surferParticleSystem.Stop();    
+    }
+
+    public void ActivatePickupParticle()
+    {
+        pickUpParticleSystem.Play();
+    }
+
+    public void DeactivatePickupParticle()
+    {
+        pickUpParticleSystem.Stop();
     }
 }

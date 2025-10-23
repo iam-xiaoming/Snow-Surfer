@@ -15,6 +15,7 @@ public class PowerupsManager : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerController.ActivatePowerup(powerup);
+            Destroy(gameObject);
         }
     }
 }
